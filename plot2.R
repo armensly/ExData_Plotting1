@@ -1,0 +1,10 @@
+setwd("~/exploratory_data_analysis_pa1/")
+dataset <- read.csv("household_power_consumption.txt", sep = ";", na.strings = c(NA,"?"))
+dataset$datetime <- paste(dataset$Date, dataset$Time)
+dataset$Date <- as.Date(dataset$Date, "%d/%m/%Y")
+dataset <- dataset[dataset$Date == "2007-02-01" | dataset$Date == "2007-02-02", ]
+dataset$datetime <- strptime(dataset$datetime, "%d/%m/%Y %H:%M:%S")
+png("plot2.png", width = 480, height = 480, units = "px")
+with(dataset, plot(datetime, Global_active_power, "n", ylab = "Global Active Power (kilowatts)", xlab = NA, ))
+lines(dataset$datetime, dataset$Global_active_power)
+dev.off()
